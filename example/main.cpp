@@ -15,6 +15,8 @@
 #endif
 #include <GLFW/glfw3.h> // Will drag system OpenGL headers
 
+#include <glm/glm.hpp>
+
 // [Win32] Our example includes a copy of glfw3.lib pre-compiled with VS2010 to maximize ease of testing and compatibility with old VS compilers.
 // To link with VS2010-era libraries, VS2015+ requires linking with legacy_stdio_definitions.lib, which we do using this pragma.
 // Your own project should not be affected, as you are likely to link with a newer binary of GLFW that is adequate for your version of Visual Studio.
@@ -26,6 +28,16 @@
 #ifdef __EMSCRIPTEN__
 #include "../libs/emscripten/emscripten_mainloop_stub.h"
 #endif
+
+void Draw() {
+	glm::vec3 pos0(0, 0.25f, 0);
+	static float x = 0;
+	glm::vec3 pos1(x += 0.01f, 0, 0);
+	glBegin(GL_LINES);
+	glVertex3fv(&pos0.x);
+	glVertex3fv(&pos1.x);
+	glEnd();
+}
 
 static void glfw_error_callback(int error, const char* description)
 {
@@ -185,6 +197,8 @@ int main(int, char**)
 		glClearColor(clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w, clear_color.w);
 		glClear(GL_COLOR_BUFFER_BIT);
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+		Draw();
 
 		// Update and Render additional Platform Windows
 		// (Platform functions may change the current OpenGL context, so we save/restore it to make it easier to paste this code elsewhere.
