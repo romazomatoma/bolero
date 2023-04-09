@@ -17,6 +17,7 @@ target_include_directories(main PRIVATE ${GLEW_INSTALL_DIR}/glew-src/include)
 target_compile_definitions(main PRIVATE GLEW_STATIC)
 
 IF (WIN32)
+
 target_link_libraries(main ${GLFW_INSTALL_DIR}/lib/glfw3.lib)
 target_link_libraries(main ${GLEW_INSTALL_DIR}/Release/glew.lib)
 target_link_libraries(main OpenGL32.Lib)
@@ -25,7 +26,14 @@ target_link_libraries(main ${GLFW_INSTALL_DIR}/lib/libglfw3.a)
 target_link_libraries(main ${GLEW_INSTALL_DIR}/libglew.a)
 find_package(OpenGL REQUIRED)
 target_link_libraries(main OpenGL::GL OpenGL::GLU)
+IF (APPLE)
+find_library(COCOA_LIBRARY Cocoa)
+find_library(IOKIT_LIBRARY IOKit)
+target_link_libraries(main ${COCOA_LIBRARY} ${IOKIT_LIBRARY})
+ELSE()
 target_link_libraries(main X11 Xxf86vm Xrandr pthread Xi dl)
+ENDIF()
+
 ENDIF()
 
 # imgui
