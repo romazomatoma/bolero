@@ -11,14 +11,21 @@ target_include_directories(main PRIVATE "${PROJECT_BINARY_DIR}") # configにア�
 
 # glfw
 target_include_directories(main PRIVATE ${GLFW_INSTALL_DIR}/include)
-target_link_libraries(main ${GLFW_INSTALL_DIR}/lib/glfw3.lib)
 
 # glew
 target_include_directories(main PRIVATE ${GLEW_INSTALL_DIR}/glew-src/include)
-target_link_libraries(main ${GLEW_INSTALL_DIR}/Release/glew.lib)
 target_compile_definitions(main PRIVATE GLEW_STATIC)
+
 IF (WIN32)
+target_link_libraries(main ${GLFW_INSTALL_DIR}/lib/glfw3.lib)
+target_link_libraries(main ${GLEW_INSTALL_DIR}/Release/glew.lib)
 target_link_libraries(main OpenGL32.Lib)
+ELSEIF (UNIX)
+target_link_libraries(main ${GLFW_INSTALL_DIR}/lib/libglfw3.a)
+target_link_libraries(main ${GLEW_INSTALL_DIR}/libglew.a)
+find_package(OpenGL REQUIRED)
+target_link_libraries(main OpenGL::GL OpenGL::GLU)
+target_link_libraries(main X11 Xxf86vm Xrandr pthread Xi dl)
 ENDIF()
 
 # imgui
