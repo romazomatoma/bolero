@@ -351,3 +351,4 @@ MigrationBackup/
 
 # BOLERO
 build_dir/
+imgui.ini
