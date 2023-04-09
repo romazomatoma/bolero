@@ -23,3 +23,6 @@ ENDIF()
 
 # imgui
 target_include_directories(main PRIVATE ${IMGUI_SOURCE_DIR})
+
+# glm
+target_include_directories(main PRIVATE ${GLM_SOURCE_DIR})
