@@ -6,6 +6,14 @@ ${IMGUI_SOURCE_DIR}/imgui_tables.cpp
 ${IMGUI_SOURCE_DIR}/imgui_widgets.cpp
 ${IMGUI_SOURCE_DIR}/backends/imgui_impl_glfw.cpp
 ${IMGUI_SOURCE_DIR}/backends/imgui_impl_opengl3.cpp
+
+
+section_manager.cpp
+
+main_glfw.cpp
+
+example_section.cpp
+
 )
 target_include_directories(main PRIVATE "${PROJECT_BINARY_DIR}") # configにアクセスできるようにするため。
 
