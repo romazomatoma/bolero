@@ -352,3 +352,4 @@ MigrationBackup/
 # BOLERO
 build_dir/
 imgui.ini
+*-Desktop_Qt_*
