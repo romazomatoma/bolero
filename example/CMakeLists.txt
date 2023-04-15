@@ -24,10 +24,93 @@ target_include_directories(main PRIVATE ${GLFW_INSTALL_DIR}/include)
 target_include_directories(main PRIVATE ${GLEW_INSTALL_DIR}/glew-src/include)
 target_compile_definitions(main PRIVATE GLEW_STATIC)
 
-if (WIN32)
+# osg
+target_include_directories(main PRIVATE ${MY_OSG_INSTALL_DIR}/include)
 
+#osg161-osg;
+#osg161-osgAnimation;
+#osg161-osgAnimationd;
+#osg161-osgd;
+#osg161-osgDB;
+#osg161-osgDBd;
+#osg161-osgFX;
+#osg161-osgFXd;
+#osg161-osgGA;
+#osg161-osgGAd;
+#osg161-osgManipulator;
+#osg161-osgManipulatord;
+#osg161-osgParticle;
+#osg161-osgParticled;
+#osg161-osgPresentation;
+#osg161-osgPresentationd;
+#osg161-osgShadow;
+#osg161-osgShadowd;
+#osg161-osgSim;
+#osg161-osgSimd;
+#osg161-osgTerrain;
+#osg161-osgTerraind;
+#osg161-osgText;
+#osg161-osgTextd;
+#osg161-osgUI;
+#osg161-osgUId;
+#osg161-osgUtil;
+#osg161-osgUtild;
+#osg161-osgViewer;
+#osg161-osgViewerd;
+#osg161-osgVolume;
+#osg161-osgVolumed;
+#osg161-osgWidget;
+#osg161-osgWidgetd;
+#ot21-OpenThreads;
+#ot21-OpenThreadsd;"
+
+set(DEBUG_FLAG "")
+
+if(CMAKE_GENERATOR_IS_MULTI_CONFIG AND CMAKE_CONFIGURATION_TYPES MATCHES "Debug")
+  set(DEBUG_FLAG "d")
+endif()
+
+# Debug判定が動かないため、常にデバッグモードとする。
+set(DEBUG_FLAG "d")
+
+if(MSVC)
+set(BEF "")
+set(AFT "${DEBUG_FLAG}.dll")
+endif()
+
+add_custom_command(TARGET main POST_BUILD
+  COMMAND ${CMAKE_COMMAND} -E copy ${MY_OSG_INSTALL_DIR}/bin/${BEF}osg161-osg${AFT} ${CMAKE_CURRENT_BINARY_DIR}
+  COMMAND ${CMAKE_COMMAND} -E copy ${MY_OSG_INSTALL_DIR}/bin/${BEF}osg161-osgViewer${AFT} ${CMAKE_CURRENT_BINARY_DIR}
+  COMMAND ${CMAKE_COMMAND} -E copy ${MY_OSG_INSTALL_DIR}/bin/${BEF}osg161-osgGA${AFT} ${CMAKE_CURRENT_BINARY_DIR}  
+  COMMAND ${CMAKE_COMMAND} -E copy ${MY_OSG_INSTALL_DIR}/bin/${BEF}osg161-osgText${AFT} ${CMAKE_CURRENT_BINARY_DIR}
+  COMMAND ${CMAKE_COMMAND} -E copy ${MY_OSG_INSTALL_DIR}/bin/${BEF}ot21-OpenThreads${AFT} ${CMAKE_CURRENT_BINARY_DIR}
+  COMMAND ${CMAKE_COMMAND} -E copy ${MY_OSG_INSTALL_DIR}/bin/${BEF}osg161-osgDB${AFT} ${CMAKE_CURRENT_BINARY_DIR}
+  COMMAND ${CMAKE_COMMAND} -E copy ${MY_OSG_INSTALL_DIR}/bin/${BEF}osg161-osgUtil${AFT} ${CMAKE_CURRENT_BINARY_DIR}
+)
+
+# lib
+if (WIN32)
     if(MSVC)
         target_link_libraries(main ${GLFW_INSTALL_DIR}/lib/glfw3.lib)
+        target_link_libraries(main
+        ${MY_OSG_INSTALL_DIR}/lib/OpenThreads${DEBUG_FLAG}.lib
+        ${MY_OSG_INSTALL_DIR}/lib/osg${DEBUG_FLAG}.lib
+        ${MY_OSG_INSTALL_DIR}/lib/osgAnimation${DEBUG_FLAG}.lib
+        ${MY_OSG_INSTALL_DIR}/lib/osgDB${DEBUG_FLAG}.lib
+        ${MY_OSG_INSTALL_DIR}/lib/osgFX${DEBUG_FLAG}.lib
+        ${MY_OSG_INSTALL_DIR}/lib/osgGA${DEBUG_FLAG}.lib
+        ${MY_OSG_INSTALL_DIR}/lib/osgManipulator${DEBUG_FLAG}.lib
+        ${MY_OSG_INSTALL_DIR}/lib/osgParticle${DEBUG_FLAG}.lib
+        ${MY_OSG_INSTALL_DIR}/lib/osgPresentation${DEBUG_FLAG}.lib
+        ${MY_OSG_INSTALL_DIR}/lib/osgShadow${DEBUG_FLAG}.lib
+        ${MY_OSG_INSTALL_DIR}/lib/osgSim${DEBUG_FLAG}.lib
+        ${MY_OSG_INSTALL_DIR}/lib/osgTerrain${DEBUG_FLAG}.lib
+        ${MY_OSG_INSTALL_DIR}/lib/osgText${DEBUG_FLAG}.lib
+        ${MY_OSG_INSTALL_DIR}/lib/osgUI${DEBUG_FLAG}.lib
+        ${MY_OSG_INSTALL_DIR}/lib/osgUtil${DEBUG_FLAG}.lib
+        ${MY_OSG_INSTALL_DIR}/lib/osgViewer${DEBUG_FLAG}.lib
+        ${MY_OSG_INSTALL_DIR}/lib/osgVolume${DEBUG_FLAG}.lib
+        ${MY_OSG_INSTALL_DIR}/lib/osgWidget${DEBUG_FLAG}.lib)
     else()
         target_link_libraries(main ${GLFW_LIB})
     endif()
