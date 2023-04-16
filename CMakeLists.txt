@@ -9,4 +9,10 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 add_subdirectory(3rdparty)
 add_subdirectory(src)
-add_subdirectory(example)
+
+# なぜか初回は一度ビルドを成功させないと、ExternalProject_Addが呼ばれないので、ダミープロジェクトを用意した。
+if(1)
+    add_subdirectory(example)
+else()
+    add_executable(dummy_main example/dummy_main.cpp)
+endif()
