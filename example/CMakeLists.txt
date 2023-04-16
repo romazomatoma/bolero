@@ -64,53 +64,49 @@ target_include_directories(main PRIVATE ${MY_OSG_INSTALL_DIR}/include)
 #ot21-OpenThreads;
 #ot21-OpenThreadsd;"
 
-set(DEBUG_FLAG "")
-
-if(CMAKE_GENERATOR_IS_MULTI_CONFIG AND CMAKE_CONFIGURATION_TYPES MATCHES "Debug")
-  set(DEBUG_FLAG "d")
-endif()
-
-# Debug判定が動かないため、常にデバッグモードとする。
-set(DEBUG_FLAG "d")
-
-if(MSVC)
-set(BEF "")
-set(AFT "${DEBUG_FLAG}.dll")
-endif()
-
-add_custom_command(TARGET main POST_BUILD
-  COMMAND ${CMAKE_COMMAND} -E copy ${MY_OSG_INSTALL_DIR}/bin/${BEF}osg161-osg${AFT} ${CMAKE_CURRENT_BINARY_DIR}
-  COMMAND ${CMAKE_COMMAND} -E copy ${MY_OSG_INSTALL_DIR}/bin/${BEF}osg161-osgViewer${AFT} ${CMAKE_CURRENT_BINARY_DIR}
-  COMMAND ${CMAKE_COMMAND} -E copy ${MY_OSG_INSTALL_DIR}/bin/${BEF}osg161-osgGA${AFT} ${CMAKE_CURRENT_BINARY_DIR}  
-  COMMAND ${CMAKE_COMMAND} -E copy ${MY_OSG_INSTALL_DIR}/bin/${BEF}osg161-osgText${AFT} ${CMAKE_CURRENT_BINARY_DIR}
-  COMMAND ${CMAKE_COMMAND} -E copy ${MY_OSG_INSTALL_DIR}/bin/${BEF}ot21-OpenThreads${AFT} ${CMAKE_CURRENT_BINARY_DIR}
-  COMMAND ${CMAKE_COMMAND} -E copy ${MY_OSG_INSTALL_DIR}/bin/${BEF}osg161-osgDB${AFT} ${CMAKE_CURRENT_BINARY_DIR}
-  COMMAND ${CMAKE_COMMAND} -E copy ${MY_OSG_INSTALL_DIR}/bin/${BEF}osg161-osgUtil${AFT} ${CMAKE_CURRENT_BINARY_DIR}
-)
+set(my_list ".dll" "d.dll")
+set(osg_dll_path ${MY_OSG_INSTALL_DIR}/bin/)
+foreach(AFT IN LISTS my_list)
+    add_custom_command(TARGET main POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy ${osg_dll_path}osg161-osg${AFT} ${CMAKE_CURRENT_BINARY_DIR}
+        COMMAND ${CMAKE_COMMAND} -E copy ${osg_dll_path}osg161-osgViewer${AFT} ${CMAKE_CURRENT_BINARY_DIR}
+        COMMAND ${CMAKE_COMMAND} -E copy ${osg_dll_path}osg161-osgGA${AFT} ${CMAKE_CURRENT_BINARY_DIR}
+        COMMAND ${CMAKE_COMMAND} -E copy ${osg_dll_path}osg161-osgText${AFT} ${CMAKE_CURRENT_BINARY_DIR}
+        COMMAND ${CMAKE_COMMAND} -E copy ${osg_dll_path}ot21-OpenThreads${AFT} ${CMAKE_CURRENT_BINARY_DIR}
+        COMMAND ${CMAKE_COMMAND} -E copy ${osg_dll_path}osg161-osgDB${AFT} ${CMAKE_CURRENT_BINARY_DIR}
+        COMMAND ${CMAKE_COMMAND} -E copy ${osg_dll_path}osg161-osgUtil${AFT} ${CMAKE_CURRENT_BINARY_DIR}
+    )
+endforeach()
 
 # lib
+set(osg_lib_list
+    "OpenThreads"
+    "osg"
+    "osgAnimation"
+    "osgDB"
+    "osgFX"
+    "osgGA"
+    "osgManipulator"
+    "osgParticle"
+    "osgPresentation"
+    "osgShadow"
+    "osgSim"
+    "osgTerrain"
+    "osgText"
+    "osgUI"
+    "osgUtil"
+    "osgViewer"
+    "osgVolume"
+    "osgWidget"
+)
+
 if (WIN32)
     if(MSVC)
         target_link_libraries(main ${GLFW_INSTALL_DIR}/lib/glfw3.lib)
-        target_link_libraries(main
-        ${MY_OSG_INSTALL_DIR}/lib/OpenThreads${DEBUG_FLAG}.lib
-        ${MY_OSG_INSTALL_DIR}/lib/osg${DEBUG_FLAG}.lib
-        ${MY_OSG_INSTALL_DIR}/lib/osgAnimation${DEBUG_FLAG}.lib
-        ${MY_OSG_INSTALL_DIR}/lib/osgDB${DEBUG_FLAG}.lib
-        ${MY_OSG_INSTALL_DIR}/lib/osgFX${DEBUG_FLAG}.lib
-        ${MY_OSG_INSTALL_DIR}/lib/osgGA${DEBUG_FLAG}.lib
-        ${MY_OSG_INSTALL_DIR}/lib/osgManipulator${DEBUG_FLAG}.lib
-        ${MY_OSG_INSTALL_DIR}/lib/osgParticle${DEBUG_FLAG}.lib
-        ${MY_OSG_INSTALL_DIR}/lib/osgPresentation${DEBUG_FLAG}.lib
-        ${MY_OSG_INSTALL_DIR}/lib/osgShadow${DEBUG_FLAG}.lib
-        ${MY_OSG_INSTALL_DIR}/lib/osgSim${DEBUG_FLAG}.lib
-        ${MY_OSG_INSTALL_DIR}/lib/osgTerrain${DEBUG_FLAG}.lib
-        ${MY_OSG_INSTALL_DIR}/lib/osgText${DEBUG_FLAG}.lib
-        ${MY_OSG_INSTALL_DIR}/lib/osgUI${DEBUG_FLAG}.lib
-        ${MY_OSG_INSTALL_DIR}/lib/osgUtil${DEBUG_FLAG}.lib
-        ${MY_OSG_INSTALL_DIR}/lib/osgViewer${DEBUG_FLAG}.lib
-        ${MY_OSG_INSTALL_DIR}/lib/osgVolume${DEBUG_FLAG}.lib
-        ${MY_OSG_INSTALL_DIR}/lib/osgWidget${DEBUG_FLAG}.lib)
+        foreach(n IN LISTS osg_lib_list)
+            target_link_libraries(main debug ${MY_OSG_INSTALL_DIR}/lib/${n}d.lib)
+            target_link_libraries(main optimized ${MY_OSG_INSTALL_DIR}/lib/${n}.lib)
+        endforeach()
     else()
         target_link_libraries(main ${GLFW_LIB})
     endif()
