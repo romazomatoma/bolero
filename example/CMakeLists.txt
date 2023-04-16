@@ -79,13 +79,29 @@ if (WIN32)
             COMMAND ${CMAKE_COMMAND} -E copy ${osg_dll_path}osg161-osgUtil${AFT} ${CMAKE_CURRENT_BINARY_DIR})
     endforeach()
 elseif(APPLE)
-    target_link_libraries(main ${MY_OSG_INSTALL_DIR}/lib/libosg.161.dylib)
-    target_link_libraries(main ${MY_OSG_INSTALL_DIR}/lib/libosgViewer.161.dylib)
-    target_link_libraries(main ${MY_OSG_INSTALL_DIR}/lib/libosgGA.161.dylib)
-    target_link_libraries(main ${MY_OSG_INSTALL_DIR}/lib/libosgText.161.dylib)
-    target_link_libraries(main ${MY_OSG_INSTALL_DIR}/lib/libosgDB.161.dylib)
-    target_link_libraries(main ${MY_OSG_INSTALL_DIR}/lib/libosgUtil.161.dylib)
-    target_link_libraries(main ${MY_OSG_INSTALL_DIR}/lib/libOpenThreads.21.dylib)
+    set(osg_lib_list_apple
+        libOpenThreads.3.3.1.dylib
+        libosgShadow.3.6.5.dylib
+        libosg.3.6.5.dylib
+        libosgSim.3.6.5.dylib
+        libosgAnimation.3.6.5.dylib
+        libosgTerrain.3.6.5.dylib
+        libosgDB.3.6.5.dylib
+        libosgText.3.6.5.dylib
+        libosgFX.3.6.5.dylib
+        libosgUI.3.6.5.dylib
+        libosgGA.3.6.5.dylib
+        libosgUtil.3.6.5.dylib
+        libosgManipulator.3.6.5.dylib
+        libosgViewer.3.6.5.dylib
+        libosgParticle.3.6.5.dylib
+        libosgVolume.3.6.5.dylib
+        libosgPresentation.3.6.5.dylib
+        libosgWidget.3.6.5.dylib
+        )
+    foreach(libName IN LISTS osg_lib_list_apple)
+        target_link_libraries(main ${MY_OSG_INSTALL_DIR}/lib/${libName})
+    endforeach()
 elseif(UNIX)
 endif()
 
