@@ -48,6 +48,6 @@ namespace {
 
 int main(){
 	std::cout << "hello bolero" << std::endl;
-	// return bolero::MainGlfwLoop();
-	return ViewerRun(CreateSimpleShape());
+    return bolero::MainGlfwLoop();
+    // return ViewerRun(CreateSimpleShape());
 }
