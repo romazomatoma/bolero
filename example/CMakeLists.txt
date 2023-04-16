@@ -64,19 +64,30 @@ target_include_directories(main PRIVATE ${MY_OSG_INSTALL_DIR}/include)
 #ot21-OpenThreads;
 #ot21-OpenThreadsd;"
 
-set(my_list ".dll" "d.dll")
-set(osg_dll_path ${MY_OSG_INSTALL_DIR}/bin/)
-foreach(AFT IN LISTS my_list)
-    add_custom_command(TARGET main POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy ${osg_dll_path}osg161-osg${AFT} ${CMAKE_CURRENT_BINARY_DIR}
-        COMMAND ${CMAKE_COMMAND} -E copy ${osg_dll_path}osg161-osgViewer${AFT} ${CMAKE_CURRENT_BINARY_DIR}
-        COMMAND ${CMAKE_COMMAND} -E copy ${osg_dll_path}osg161-osgGA${AFT} ${CMAKE_CURRENT_BINARY_DIR}
-        COMMAND ${CMAKE_COMMAND} -E copy ${osg_dll_path}osg161-osgText${AFT} ${CMAKE_CURRENT_BINARY_DIR}
-        COMMAND ${CMAKE_COMMAND} -E copy ${osg_dll_path}ot21-OpenThreads${AFT} ${CMAKE_CURRENT_BINARY_DIR}
-        COMMAND ${CMAKE_COMMAND} -E copy ${osg_dll_path}osg161-osgDB${AFT} ${CMAKE_CURRENT_BINARY_DIR}
-        COMMAND ${CMAKE_COMMAND} -E copy ${osg_dll_path}osg161-osgUtil${AFT} ${CMAKE_CURRENT_BINARY_DIR}
-    )
-endforeach()
+if (WIN32)
+    set(my_list ".dll" "d.dll")
+    set(osg_dll_path ${MY_OSG_INSTALL_DIR}/bin/)
+    foreach(AFT IN LISTS my_list)
+        add_custom_command(
+            TARGET main POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E copy ${osg_dll_path}osg161-osg${AFT} ${CMAKE_CURRENT_BINARY_DIR}
+            COMMAND ${CMAKE_COMMAND} -E copy ${osg_dll_path}osg161-osgViewer${AFT} ${CMAKE_CURRENT_BINARY_DIR}
+            COMMAND ${CMAKE_COMMAND} -E copy ${osg_dll_path}osg161-osgGA${AFT} ${CMAKE_CURRENT_BINARY_DIR}
+            COMMAND ${CMAKE_COMMAND} -E copy ${osg_dll_path}osg161-osgText${AFT} ${CMAKE_CURRENT_BINARY_DIR}
+            COMMAND ${CMAKE_COMMAND} -E copy ${osg_dll_path}ot21-OpenThreads${AFT} ${CMAKE_CURRENT_BINARY_DIR}
+            COMMAND ${CMAKE_COMMAND} -E copy ${osg_dll_path}osg161-osgDB${AFT} ${CMAKE_CURRENT_BINARY_DIR}
+            COMMAND ${CMAKE_COMMAND} -E copy ${osg_dll_path}osg161-osgUtil${AFT} ${CMAKE_CURRENT_BINARY_DIR})
+    endforeach()
+elseif(APPLE)
+    target_link_libraries(main ${MY_OSG_INSTALL_DIR}/lib/libosg.161.dylib)
+    target_link_libraries(main ${MY_OSG_INSTALL_DIR}/lib/libosgViewer.161.dylib)
+    target_link_libraries(main ${MY_OSG_INSTALL_DIR}/lib/libosgGA.161.dylib)
+    target_link_libraries(main ${MY_OSG_INSTALL_DIR}/lib/libosgText.161.dylib)
+    target_link_libraries(main ${MY_OSG_INSTALL_DIR}/lib/libosgDB.161.dylib)
+    target_link_libraries(main ${MY_OSG_INSTALL_DIR}/lib/libosgUtil.161.dylib)
+    target_link_libraries(main ${MY_OSG_INSTALL_DIR}/lib/libOpenThreads.21.dylib)
+elseif(UNIX)
+endif()
 
 # lib
 set(osg_lib_list
@@ -103,9 +114,9 @@ set(osg_lib_list
 if (WIN32)
     if(MSVC)
         target_link_libraries(main ${GLFW_INSTALL_DIR}/lib/glfw3.lib)
-        foreach(n IN LISTS osg_lib_list)
-            target_link_libraries(main debug ${MY_OSG_INSTALL_DIR}/lib/${n}d.lib)
-            target_link_libraries(main optimized ${MY_OSG_INSTALL_DIR}/lib/${n}.lib)
+        foreach(libName IN LISTS osg_lib_list)
+            target_link_libraries(main debug ${MY_OSG_INSTALL_DIR}/lib/${libName}d.lib)
+            target_link_libraries(main optimized ${MY_OSG_INSTALL_DIR}/lib/${libName}.lib)
         endforeach()
     else()
         target_link_libraries(main ${GLFW_LIB})
