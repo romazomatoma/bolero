@@ -353,3 +353,5 @@ MigrationBackup/
 build_dir/
 imgui.ini
 *-Desktop_Qt_*
+my_python/download/*
+/my_python/bolero_fx_ui_param.json
