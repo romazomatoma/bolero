@@ -24,81 +24,81 @@ target_include_directories(main PRIVATE ${GLFW_INSTALL_DIR}/include)
 target_include_directories(main PRIVATE ${GLEW_INSTALL_DIR}/glew-src/include)
 target_compile_definitions(main PRIVATE GLEW_STATIC)
 
-# osg
-target_include_directories(main PRIVATE ${MY_OSG_INSTALL_DIR}/include)
+# # osg
+# target_include_directories(main PRIVATE ${MY_OSG_INSTALL_DIR}/include)
 
-#osg161-osg;
-#osg161-osgAnimation;
-#osg161-osgAnimationd;
-#osg161-osgd;
-#osg161-osgDB;
-#osg161-osgDBd;
-#osg161-osgFX;
-#osg161-osgFXd;
-#osg161-osgGA;
-#osg161-osgGAd;
-#osg161-osgManipulator;
-#osg161-osgManipulatord;
-#osg161-osgParticle;
-#osg161-osgParticled;
-#osg161-osgPresentation;
-#osg161-osgPresentationd;
-#osg161-osgShadow;
-#osg161-osgShadowd;
-#osg161-osgSim;
-#osg161-osgSimd;
-#osg161-osgTerrain;
-#osg161-osgTerraind;
-#osg161-osgText;
-#osg161-osgTextd;
-#osg161-osgUI;
-#osg161-osgUId;
-#osg161-osgUtil;
-#osg161-osgUtild;
-#osg161-osgViewer;
-#osg161-osgViewerd;
-#osg161-osgVolume;
-#osg161-osgVolumed;
-#osg161-osgWidget;
-#osg161-osgWidgetd;
-#ot21-OpenThreads;
-#ot21-OpenThreadsd;"
+# #osg161-osg;
+# #osg161-osgAnimation;
+# #osg161-osgAnimationd;
+# #osg161-osgd;
+# #osg161-osgDB;
+# #osg161-osgDBd;
+# #osg161-osgFX;
+# #osg161-osgFXd;
+# #osg161-osgGA;
+# #osg161-osgGAd;
+# #osg161-osgManipulator;
+# #osg161-osgManipulatord;
+# #osg161-osgParticle;
+# #osg161-osgParticled;
+# #osg161-osgPresentation;
+# #osg161-osgPresentationd;
+# #osg161-osgShadow;
+# #osg161-osgShadowd;
+# #osg161-osgSim;
+# #osg161-osgSimd;
+# #osg161-osgTerrain;
+# #osg161-osgTerraind;
+# #osg161-osgText;
+# #osg161-osgTextd;
+# #osg161-osgUI;
+# #osg161-osgUId;
+# #osg161-osgUtil;
+# #osg161-osgUtild;
+# #osg161-osgViewer;
+# #osg161-osgViewerd;
+# #osg161-osgVolume;
+# #osg161-osgVolumed;
+# #osg161-osgWidget;
+# #osg161-osgWidgetd;
+# #ot21-OpenThreads;
+# #ot21-OpenThreadsd;"
 
-set(my_list ".dll" "d.dll")
-set(osg_dll_path ${MY_OSG_INSTALL_DIR}/bin/)
-foreach(AFT IN LISTS my_list)
-    add_custom_command(TARGET main POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy ${osg_dll_path}osg161-osg${AFT} ${CMAKE_CURRENT_BINARY_DIR}
-        COMMAND ${CMAKE_COMMAND} -E copy ${osg_dll_path}osg161-osgViewer${AFT} ${CMAKE_CURRENT_BINARY_DIR}
-        COMMAND ${CMAKE_COMMAND} -E copy ${osg_dll_path}osg161-osgGA${AFT} ${CMAKE_CURRENT_BINARY_DIR}
-        COMMAND ${CMAKE_COMMAND} -E copy ${osg_dll_path}osg161-osgText${AFT} ${CMAKE_CURRENT_BINARY_DIR}
-        COMMAND ${CMAKE_COMMAND} -E copy ${osg_dll_path}ot21-OpenThreads${AFT} ${CMAKE_CURRENT_BINARY_DIR}
-        COMMAND ${CMAKE_COMMAND} -E copy ${osg_dll_path}osg161-osgDB${AFT} ${CMAKE_CURRENT_BINARY_DIR}
-        COMMAND ${CMAKE_COMMAND} -E copy ${osg_dll_path}osg161-osgUtil${AFT} ${CMAKE_CURRENT_BINARY_DIR}
-    )
-endforeach()
+# set(my_list ".dll" "d.dll")
+# set(osg_dll_path ${MY_OSG_INSTALL_DIR}/bin/)
+# foreach(AFT IN LISTS my_list)
+#     add_custom_command(TARGET main POST_BUILD
+#         COMMAND ${CMAKE_COMMAND} -E copy ${osg_dll_path}osg161-osg${AFT} ${CMAKE_CURRENT_BINARY_DIR}
+#         COMMAND ${CMAKE_COMMAND} -E copy ${osg_dll_path}osg161-osgViewer${AFT} ${CMAKE_CURRENT_BINARY_DIR}
+#         COMMAND ${CMAKE_COMMAND} -E copy ${osg_dll_path}osg161-osgGA${AFT} ${CMAKE_CURRENT_BINARY_DIR}
+#         COMMAND ${CMAKE_COMMAND} -E copy ${osg_dll_path}osg161-osgText${AFT} ${CMAKE_CURRENT_BINARY_DIR}
+#         COMMAND ${CMAKE_COMMAND} -E copy ${osg_dll_path}ot21-OpenThreads${AFT} ${CMAKE_CURRENT_BINARY_DIR}
+#         COMMAND ${CMAKE_COMMAND} -E copy ${osg_dll_path}osg161-osgDB${AFT} ${CMAKE_CURRENT_BINARY_DIR}
+#         COMMAND ${CMAKE_COMMAND} -E copy ${osg_dll_path}osg161-osgUtil${AFT} ${CMAKE_CURRENT_BINARY_DIR}
+#     )
+# endforeach()
 
-# lib
-set(osg_lib_list
-    "OpenThreads"
-    "osg"
-    "osgAnimation"
-    "osgDB"
-    "osgFX"
-    "osgGA"
-    "osgManipulator"
-    "osgParticle"
-    "osgPresentation"
-    "osgShadow"
-    "osgSim"
-    "osgTerrain"
-    "osgText"
-    "osgUI"
-    "osgUtil"
-    "osgViewer"
-    "osgVolume"
-    "osgWidget"
-)
+# # lib
+# set(osg_lib_list
+#     "OpenThreads"
+#     "osg"
+#     "osgAnimation"
+#     "osgDB"
+#     "osgFX"
+#     "osgGA"
+#     "osgManipulator"
+#     "osgParticle"
+#     "osgPresentation"
+#     "osgShadow"
+#     "osgSim"
+#     "osgTerrain"
+#     "osgText"
+#     "osgUI"
+#     "osgUtil"
+#     "osgViewer"
+#     "osgVolume"
+#     "osgWidget"
+# )
 
 if (WIN32)
     if(MSVC)
